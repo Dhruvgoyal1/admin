@@ -1,25 +1,73 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
+import Dashboard from "./components/Dashboard";
+import Signup from "./components/Auth/Signup";
+import Login from "./components/Auth/Login";
+import Posts from "./components/Posts";
+import Comments from "./components/Comments";
+import Photos from "./components/Photos";
+import Todos from "./components/Todos"; // Import the Todo component
+import PrivateRoute from "./components/PrivateRoute";
+// import Comments from "./components/Comments";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Navigate to="/signup" />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+
+        {/* Protected Routes */}
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/post"
+          element={
+            <PrivateRoute>
+              <Posts />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/comment"
+          element={
+            <PrivateRoute>
+              <Comments />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/photo"
+          element={
+            <PrivateRoute>
+              <Photos />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/todos"
+          element={
+            <PrivateRoute>
+              <Todos />
+            </PrivateRoute>
+          }
+        />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
